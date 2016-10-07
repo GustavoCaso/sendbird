@@ -17,6 +17,12 @@ SendbirdApi.config do |config|
   config.api_key = configuration['api_key']
 end
 
+def create_dynamic_cassette(name)
+  VCR.use_cassette(name, erb: {api_token: SendbirdApi.api_key}) do
+    yield
+  end
+end
+
 # Setup for test requests
 require 'vcr'
 require 'webmock/rspec'

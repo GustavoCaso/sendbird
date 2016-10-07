@@ -23,7 +23,7 @@ module SendbirdApi
 
     def request(method:, path:, params:, body:)
       conn.send(method) do |req|
-        req.url path
+        req.url path, params
         req.headers['Api-Token'] = SendbirdApi.api_key
         req.headers['Content-Type'] = 'application/json, charset=utf8'
         req.body = body.to_json if body
