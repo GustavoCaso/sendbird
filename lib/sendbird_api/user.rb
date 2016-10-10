@@ -1,45 +1,47 @@
 module SendbirdApi
   class User
     extend Client
+    ENDPOINT = 'users'.freeze
+
     class << self
       def show(user_id)
-        get(path: "users/#{user_id}")
+        get(path: build_url(user_id))
       end
 
       def create(body)
-        post(path: 'users', body: body)
+        post(path: build_url, body: body)
       end
 
       def list(params={})
-        get(path: 'users', params: params)
+        get(path: build_url, params: params)
       end
 
       def update(user_id, body)
-        put(path: "users/#{user_id}", body: body)
+        put(path: build_url(user_id), body: body)
       end
 
       def unread_count(user_id)
-        get(path: "users/#{user_id}/unread_count")
+        get(path: build_url(user_id, 'unread_count'))
       end
 
       def activate(user_id, body)
-        put(path: "users/#{user_id}/activate", body: body)
+        put(path: build_url(user_id, 'activate'), body: body)
       end
 
       def block(user_id, body)
-        post(path: "users/#{user_id}/block", body: body)
+        post(path: build_url(user_id, 'block'), body: body)
       end
 
       def unblock(user_id, unblock_user_id)
-        delete(path: "users/#{user_id}/block/#{unblock_user_id}")
+        delete(path: build_url(user_id, 'block', unblock_user_id))
       end
 
       def block_list(user_id, params={})
-        get(path: "users/#{user_id}/block", params: params)
+        get(path: build_url(user_id, 'block'), params: params)
       end
 
       def mark_as_read_all(user_id)
-        put(path: "users/#{user_id}/mark_as_read_all")
+        put(path: build_url(user_id, 'mark_as_read_all'))
       end
 
       def register_gcm_token(user_id, token)
@@ -59,28 +61,37 @@ module SendbirdApi
       end
 
       def unregister_all_device_token(user_id)
-        delete(path: "users/#{user_id}/push")
+        delete(path: build_url(user_id, 'push'))
       end
 
       def push_preferences(user_id)
-        get(path: "users/#{user_id}/push_preference")
+        get(path: build_url(user_id, 'push_preference'))
       end
 
       def update_push_preferences(user_id, body)
-        put(path: "users/#{user_id}/push_preference", body: body)
+        put(path: build_url(user_id, 'push_preference'), body: body)
       end
 
       def delete_push_preferences(user_id)
-        delete(path: "users/#{user_id}/push_preference")
+        delete(path: build_url(user_id, 'push_preference'))
+      end
+    end
+
+    def self.build_url(*args)
+      if args.any?
+        new_args = args.dup
+        new_args.insert(0, ENDPOINT).join('/')
+      else
+        ENDPOINT
       end
     end
 
     def self.register_token(user_id,token_type, body)
-      post(path: "users/#{user_id}/push/#{token_type}", body: body)
+      post(path: build_url(user_id, 'push', token_type), body: body)
     end
 
     def self.unregister_token(user_id, token_type, token)
-      delete(path: "users/#{user_id}/push/#{token_type}/#{token}")
+      delete(path: build_url(user_id, 'push', token_type, token))
     end
 
     private_class_method :register_token, :unregister_token
