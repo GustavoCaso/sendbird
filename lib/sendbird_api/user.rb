@@ -41,6 +41,48 @@ module SendbirdApi
       def mark_as_read_all(user_id)
         put(path: "users/#{user_id}/mark_as_read_all")
       end
+
+      def register_gcm_token(user_id, token)
+        register_token(user_id, 'gcm', {gcm_reg_token: token})
+      end
+
+      def register_apns_token(user_id, token)
+        register_token(user_id, 'apns', {apns_device_token: token})
+      end
+
+      def unregister_gcm_token(user_id, token)
+        unregister_token(user_id, 'gcm', token)
+      end
+
+      def unregister_apns_token(user_id, token)
+        unregister_token(user_id, 'apns', token)
+      end
+
+      def unregister_all_device_token(user_id)
+        delete(path: "users/#{user_id}/push")
+      end
+
+      def push_preferences(user_id)
+        get(path: "users/#{user_id}/push_preference")
+      end
+
+      def update_push_preferences(user_id, body)
+        put(path: "users/#{user_id}/push_preference", body: body)
+      end
+
+      def delete_push_preferences(user_id)
+        delete(path: "users/#{user_id}/push_preference")
+      end
     end
+
+    def self.register_token(user_id,token_type, body)
+      post(path: "users/#{user_id}/push/#{token_type}", body: body)
+    end
+
+    def self.unregister_token(user_id, token_type, token)
+      delete(path: "users/#{user_id}/push/#{token_type}/#{token}")
+    end
+
+    private_class_method :register_token, :unregister_token
   end
 end

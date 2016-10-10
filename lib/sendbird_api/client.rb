@@ -15,10 +15,10 @@ module SendbirdApi
 
     private
     def conn
-      Faraday.new(url: SendbirdApi::Configuration::SENDBIRD_ENDPOINT) do |c|
-        c.request  :url_encoded
-        c.adapter  Faraday.default_adapter
-      end
+      @conn ||= Faraday.new(url: SendbirdApi::Configuration::SENDBIRD_ENDPOINT) do |c|
+                  c.request  :url_encoded
+                  c.adapter  Faraday.default_adapter
+                end
     end
 
     def request(method:, path:, params:, body:)

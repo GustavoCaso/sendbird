@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.sendbird.com/v3/users/cvilanova@path.travel/block
+    uri: https://api.sendbird.com/v3/users/cvilanova@path.travel/push/gcm
     body:
       encoding: UTF-8
-      string: '{"target_id":"c1ab00ee-caf3-4796-8f16-a5b4d75a40f1"}'
+      string: '{"gcm_reg_token":"testing_gcm"}'
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.10.1
       Date:
-      - Fri, 07 Oct 2016 06:02:11 GMT
+      - Sun, 09 Oct 2016 18:41:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,7 +40,7 @@ http_interactions:
       - en
     body:
       encoding: UTF-8
-      string: '{"nickname":"adrilv","last_seen_at":1475663450192,"user_id":"c1ab00ee-caf3-4796-8f16-a5b4d75a40f1","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_23_512px.png","is_online":false}'
+      string: '{"token":"testing_gcm","type":"GCM","user":{"nickname":"testing_update","user_id":"cvilanova@path.travel","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_23_512px.png"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 06:02:11 GMT
+  recorded_at: Sun, 09 Oct 2016 18:41:39 GMT
 recorded_with: VCR 3.0.3
