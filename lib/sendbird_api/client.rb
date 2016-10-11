@@ -13,6 +13,15 @@ module SendbirdApi
       end
     end
 
+    def build_url(*args)
+      if args.any?
+        new_args = args.dup
+        new_args.insert(0, self.const_get('ENDPOINT')).join('/')
+      else
+        self.const_get('ENDPOINT')
+      end
+    end
+
     private
     def conn
       @conn ||= Faraday.new(url: SendbirdApi::Configuration::SENDBIRD_ENDPOINT) do |c|

@@ -77,15 +77,6 @@ module SendbirdApi
       end
     end
 
-    def self.build_url(*args)
-      if args.any?
-        new_args = args.dup
-        new_args.insert(0, ENDPOINT).join('/')
-      else
-        ENDPOINT
-      end
-    end
-
     def self.register_token(user_id,token_type, body)
       post(path: build_url(user_id, 'push', token_type), body: body)
     end
