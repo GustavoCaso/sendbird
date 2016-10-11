@@ -13,12 +13,12 @@ describe SendbirdApi::User do
     end
 
     it  do
-      expect(request.response_body['error']).to eq true
-      expect(request.response_body.keys).to include('message')
-      expect(request.response_body.keys).to include('code')
+      expect(request.body['error']).to eq true
+      expect(request.body.keys).to include('message')
+      expect(request.body.keys).to include('code')
     end
   end
-  
+
   context 'Create' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/create") do
@@ -34,8 +34,8 @@ describe SendbirdApi::User do
       expect(request.status).to eq 200
     end
 
-    it 'will create user and return response_body' do
-      expect(request.response_body).to be_a Hash
+    it 'will create user and return body' do
+      expect(request.body).to be_a Hash
     end
   end
 
@@ -51,11 +51,11 @@ describe SendbirdApi::User do
     end
 
     it 'will list the user' do
-      expect(request.response_body).to be_a Hash
+      expect(request.body).to be_a Hash
     end
 
     it 'will include the next token to fetch more users' do
-      expect(request.response_body['next']).to_not be_empty
+      expect(request.body['next']).to_not be_empty
     end
 
     context 'Filter' do
@@ -71,7 +71,7 @@ describe SendbirdApi::User do
         end
 
         it 'will return just the number specify' do
-          expect(request.response_body['users'].size).to eq 3
+          expect(request.body['users'].size).to eq 3
         end
       end
     end
@@ -89,7 +89,7 @@ describe SendbirdApi::User do
     end
 
     it 'will update the user' do
-      expect(request.response_body['nickname']).to eq 'testing_update'
+      expect(request.body['nickname']).to eq 'testing_update'
     end
   end
 
@@ -105,7 +105,7 @@ describe SendbirdApi::User do
     end
 
     it 'will return the user data' do
-      expect(request.response_body['user_id']).to eq 'cvilanova@path.travel'
+      expect(request.body['user_id']).to eq 'cvilanova@path.travel'
     end
   end
 
@@ -121,7 +121,7 @@ describe SendbirdApi::User do
     end
 
     it 'will return the number of unread messages' do
-      expect(request.response_body['unread_count']).to eq 0
+      expect(request.body['unread_count']).to eq 0
     end
   end
 
@@ -138,7 +138,7 @@ describe SendbirdApi::User do
       end
 
       it 'will activate the given user' do
-        expect(request.response_body['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['user_id']).to eq 'cvilanova@path.travel'
       end
     end
 
@@ -154,7 +154,7 @@ describe SendbirdApi::User do
       end
 
       it 'will deactivate the given user' do
-        expect(request.response_body).to eq({})
+        expect(request.body).to eq({})
       end
     end
   end
@@ -171,7 +171,7 @@ describe SendbirdApi::User do
     end
 
     it 'will block the given user' do
-      expect(request.response_body['user_id']).to eq('c1ab00ee-caf3-4796-8f16-a5b4d75a40f1')
+      expect(request.body['user_id']).to eq('c1ab00ee-caf3-4796-8f16-a5b4d75a40f1')
     end
 
     describe 'Get list of blocked users' do
@@ -186,10 +186,10 @@ describe SendbirdApi::User do
       end
 
       it 'will return the list of blocked user allow with the next token' do
-        expect(request.response_body['users'].size).to eq(1)
-        expect(request.response_body['users'].first['user_id']).to eq('c1ab00ee-caf3-4796-8f16-a5b4d75a40f1')
+        expect(request.body['users'].size).to eq(1)
+        expect(request.body['users'].first['user_id']).to eq('c1ab00ee-caf3-4796-8f16-a5b4d75a40f1')
         # Beacuse there are no more users
-        expect(request.response_body['next']).to be_empty
+        expect(request.body['next']).to be_empty
       end
     end
 
@@ -205,7 +205,7 @@ describe SendbirdApi::User do
       end
 
       it 'will unblock the given user' do
-        expect(request.response_body).to eq({})
+        expect(request.body).to eq({})
       end
     end
   end
@@ -222,7 +222,7 @@ describe SendbirdApi::User do
     end
 
     it 'will mark all messages as read for given user' do
-      expect(request.response_body).to eq({})
+      expect(request.body).to eq({})
     end
   end
 
@@ -239,9 +239,9 @@ describe SendbirdApi::User do
       end
 
       it 'will create register gcm token' do
-        expect(request.response_body['token']).to eq('testing_gcm')
-        expect(request.response_body['type']).to eq 'GCM'
-        expect(request.response_body['user']['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['token']).to eq('testing_gcm')
+        expect(request.body['type']).to eq 'GCM'
+        expect(request.body['user']['user_id']).to eq 'cvilanova@path.travel'
       end
     end
 
@@ -257,9 +257,9 @@ describe SendbirdApi::User do
       end
 
       it 'will create register gcm token' do
-        expect(request.response_body['token']).to eq('123abc456def')
-        expect(request.response_body['type']).to eq 'APNS'
-        expect(request.response_body['user']['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['token']).to eq('123abc456def')
+        expect(request.body['type']).to eq 'APNS'
+        expect(request.body['user']['user_id']).to eq 'cvilanova@path.travel'
       end
     end
   end
@@ -277,8 +277,8 @@ describe SendbirdApi::User do
       end
 
       it 'will delete registered gcm token' do
-        expect(request.response_body['token']).to eq('testing_gcm')
-        expect(request.response_body['user']['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['token']).to eq('testing_gcm')
+        expect(request.body['user']['user_id']).to eq 'cvilanova@path.travel'
       end
     end
 
@@ -294,8 +294,8 @@ describe SendbirdApi::User do
       end
 
       it 'will delete registered gcm token' do
-        expect(request.response_body['token']).to eq('123abc456def')
-        expect(request.response_body['user']['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['token']).to eq('123abc456def')
+        expect(request.body['user']['user_id']).to eq 'cvilanova@path.travel'
       end
     end
 
@@ -311,7 +311,7 @@ describe SendbirdApi::User do
       end
 
       it 'will delete all registered tokens' do
-        expect(request.response_body['user']['user_id']).to eq 'cvilanova@path.travel'
+        expect(request.body['user']['user_id']).to eq 'cvilanova@path.travel'
       end
     end
   end
@@ -336,7 +336,7 @@ describe SendbirdApi::User do
         'end_min',
         'end_hour'].each do |key|
         it do
-          expect(request.response_body.keys).to include(key)
+          expect(request.body.keys).to include(key)
         end
       end
     end
@@ -353,7 +353,7 @@ describe SendbirdApi::User do
       end
 
       it do
-        expect(request.response_body['timezone']).to eq 'Europe/London'
+        expect(request.body['timezone']).to eq 'Europe/London'
       end
     end
 
@@ -369,7 +369,7 @@ describe SendbirdApi::User do
       end
 
       it do
-        expect(request.response_body).to eq({})
+        expect(request.body).to eq({})
       end
     end
   end
