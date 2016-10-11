@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sendbird.com/v3/open_channels/Testing_api_123/ban
+    body:
+      encoding: UTF-8
+      string: '{"user_id":"nirrrr"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Api-Token:
+      - <%= api_token %>
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.1
+      Date:
+      - Tue, 11 Oct 2016 05:59:24 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '166'
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"next_url":"\/","description":"","start_at":1476165564716,"user":{"nickname":"nirrrr","user_id":"nirrrr","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_31_512px.png"},"end_at":1791525564716}'
+    http_version: 
+  recorded_at: Tue, 11 Oct 2016 05:59:24 GMT
+recorded_with: VCR 3.0.3
