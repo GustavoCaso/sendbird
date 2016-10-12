@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SendbirdApi::OpenChannel do
+  GROUP_NAME = 'Testing_api_123'
   context 'Create' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/create") do
@@ -8,7 +9,7 @@ describe SendbirdApi::OpenChannel do
       end
     end
 
-    let(:params) { {channel_url: 'Testing_api_123'} }
+    let(:params) { {channel_url: GROUP_NAME} }
     it 'will create a new Open Channel' do
       expect(request.body['channel_url']).to be_a String
       expect(request.body['participant_count']).to eq 0
@@ -31,7 +32,7 @@ describe SendbirdApi::OpenChannel do
   context 'Update' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/update") do
-        described_class.update('Testing_api_123', {name: 'Best Name Ever'})
+        described_class.update(GROUP_NAME, {name: 'Best Name Ever'})
       end
     end
 
@@ -43,7 +44,7 @@ describe SendbirdApi::OpenChannel do
   context 'View' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/view") do
-        described_class.view('Testing_api_123', participants: true)
+        described_class.view(GROUP_NAME, participants: true)
       end
     end
 
@@ -67,7 +68,7 @@ describe SendbirdApi::OpenChannel do
   context 'Participants' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/participants") do
-        described_class.participants('Testing_api_123', limit: 5)
+        described_class.participants(GROUP_NAME, limit: 5)
       end
     end
 
@@ -80,7 +81,7 @@ describe SendbirdApi::OpenChannel do
   context 'Freeze' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/freeze") do
-        described_class.freeze('Testing_api_123', freeze: true)
+        described_class.freeze(GROUP_NAME, freeze: true)
       end
     end
 
@@ -92,7 +93,7 @@ describe SendbirdApi::OpenChannel do
   context 'Ban User' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/ban") do
-        described_class.ban_user('Testing_api_123', user_id: 'nirrrr')
+        described_class.ban_user(GROUP_NAME, user_id: 'nirrrr')
       end
     end
 
@@ -104,7 +105,7 @@ describe SendbirdApi::OpenChannel do
   context 'Ban List' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/ban_list") do
-        described_class.ban_list('Testing_api_123', limit: 3)
+        described_class.ban_list(GROUP_NAME, limit: 3)
       end
     end
 
@@ -116,7 +117,7 @@ describe SendbirdApi::OpenChannel do
   context 'Ban Update' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/ban_update") do
-        described_class.ban_update('Testing_api_123', 'nirrrr', description: 'Just for not good reasons', seconds: 20)
+        described_class.ban_update(GROUP_NAME, 'nirrrr', description: 'Just for not good reasons', seconds: 20)
       end
     end
 
@@ -129,7 +130,7 @@ describe SendbirdApi::OpenChannel do
   context 'Ban View' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/ban_view") do
-        described_class.ban_view('Testing_api_123', 'nirrrr')
+        described_class.ban_view(GROUP_NAME, 'nirrrr')
       end
     end
 
@@ -141,7 +142,7 @@ describe SendbirdApi::OpenChannel do
   context 'Ban Delete' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/ban_delete") do
-        described_class.ban_delete('Testing_api_123', 'nirrrr')
+        described_class.ban_delete(GROUP_NAME, 'nirrrr')
       end
     end
 
@@ -153,7 +154,7 @@ describe SendbirdApi::OpenChannel do
   context 'Mute User' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/mute_user") do
-        described_class.mute('Testing_api_123', user_id: 'nirrrr')
+        described_class.mute(GROUP_NAME, user_id: 'nirrrr')
       end
     end
 
@@ -165,7 +166,7 @@ describe SendbirdApi::OpenChannel do
   context 'Mute List' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/mute_list") do
-        described_class.mute_list('Testing_api_123')
+        described_class.mute_list(GROUP_NAME)
       end
     end
 
@@ -179,7 +180,7 @@ describe SendbirdApi::OpenChannel do
   context 'Mute View' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/mute_view") do
-        described_class.mute_view('Testing_api_123', 'nirrrr')
+        described_class.mute_view(GROUP_NAME, 'nirrrr')
       end
     end
 
@@ -191,7 +192,7 @@ describe SendbirdApi::OpenChannel do
   context 'Mute Delete' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/mute_delete") do
-        described_class.mute_delete('Testing_api_123', 'nirrrr')
+        described_class.mute_delete(GROUP_NAME, 'nirrrr')
       end
     end
 

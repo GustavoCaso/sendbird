@@ -1,0 +1,108 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.sendbird.com/v3/group_channels
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Api-Token:
+      - <%= api_token %>
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.1
+      Date:
+      - Wed, 12 Oct 2016 08:42:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1420'
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"channels":[{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1473785162654,"user":{"nickname":"sam","user_id":"sam","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_35_512px.png"},"file":{},"data":"","message":"uee6","channel_url":"sendbird_group_channel_19032077_4468452666c4ee64815911c86e0813851965b92e","type":"MESG","message_id":479621292},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_08.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473151642,"max_length_message":-1,"channel_url":"sendbird_group_channel_19032077_4468452666c4ee64815911c86e0813851965b92e","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19032077_4468452666c4ee64815911c86e0813851965b92e","created_at":1473151642,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_08.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"type":"FILE","created_at":1473866691102,"user":{"nickname":"adrilv","user_id":"adrilv","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_04_512px.png"},"file":{"url":"https:\/\/sendbird-upload.s3-ap-northeast-1.amazonaws.com\/a3403fe7c7234a26801918a19070dae2.png","data":"","type":"image\/png","name":"new_hotel.png","size":29255},"channel_url":"sendbird_group_channel_19032077_f9a10cf8a8aae41ecc904b4a42bfce9680c30376","message_id":481210026},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473159062,"max_length_message":-1,"channel_url":"sendbird_group_channel_19032077_f9a10cf8a8aae41ecc904b4a42bfce9680c30376","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19032077_f9a10cf8a8aae41ecc904b4a42bfce9680c30376","created_at":1473159062,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1473849834523,"user":{"nickname":"Sam","user_id":"sam_bot_test","profile_url":"https:\/\/path-bucket.s3.amazonaws.com\/sam\/logo_sam.png"},"file":{},"data":"","message":"Test
+        1","channel_url":"sendbird_group_channel_19032077_35310f5cbcfb62406171cc447506befb18a6c20a","type":"MESG","message_id":480675714},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_05.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473849810,"max_length_message":-1,"channel_url":"sendbird_group_channel_19032077_35310f5cbcfb62406171cc447506befb18a6c20a","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19032077_35310f5cbcfb62406171cc447506befb18a6c20a","created_at":1473849810,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_05.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1473856848041,"user":{"nickname":"Sam","user_id":"sam_bot_test","profile_url":"https:\/\/path-bucket.s3.amazonaws.com\/sam\/logo_sam.png"},"file":{},"data":"","message":"Test
+        5","channel_url":"sendbird_group_channel_19436917_aa1de80e40edbfb91d5965d55fd644a279656cc3","type":"MESG","message_id":480865041},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473850010,"max_length_message":-1,"channel_url":"sendbird_group_channel_19436917_aa1de80e40edbfb91d5965d55fd644a279656cc3","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19436917_aa1de80e40edbfb91d5965d55fd644a279656cc3","created_at":1473850010,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1475589405470,"user":{"nickname":"Sam","user_id":"sam_bot_test","profile_url":"https:\/\/path-bucket.s3.amazonaws.com\/sam\/logo_sam.png"},"file":{},"data":"","message":"Test
+        GUSTAVO5","channel_url":"sendbird_group_channel_19443185_a006f9831ed2deaa29e02e563218357f47579254","type":"MESG","message_id":514984363},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_04.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473857577,"max_length_message":-1,"channel_url":"sendbird_group_channel_19443185_a006f9831ed2deaa29e02e563218357f47579254","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19443185_a006f9831ed2deaa29e02e563218357f47579254","created_at":1473857577,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_04.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1473869391289,"user":{"nickname":"Sam","user_id":"sam_bot_test","profile_url":"https:\/\/path-bucket.s3.amazonaws.com\/sam\/logo_sam.png"},"file":{},"data":"","message":"Bye
+        2","channel_url":"sendbird_group_channel_19038708_932aa68c4e85c63e66e7f9ee5ab254479bd18506","type":"MESG","message_id":481315852},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_04.jpg","data":"","name":"Group
+        Channel","member_count":2,"created_at":1473868387,"max_length_message":-1,"channel_url":"sendbird_group_channel_19038708_932aa68c4e85c63e66e7f9ee5ab254479bd18506","channel":{"name":"Group
+        Channel","member_count":2,"channel_url":"sendbird_group_channel_19038708_932aa68c4e85c63e66e7f9ee5ab254479bd18506","created_at":1473868387,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_04.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":true,"last_message":{"created_at":1475680370999,"user":{"nickname":"Sam","user_id":"sam_bot_test","profile_url":"https:\/\/path-bucket.s3.amazonaws.com\/sam\/logo_sam.png"},"file":{},"data":"","message":"hola","channel_url":"sendbird_group_channel_19713583_14300af5f88191ded73b407ec761686e37793f99","type":"MESG","message_id":516907236},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","data":"","name":"snavas@path.travel","member_count":3,"created_at":1474369154,"max_length_message":-1,"channel_url":"sendbird_group_channel_19713583_14300af5f88191ded73b407ec761686e37793f99","channel":{"name":"snavas@path.travel","member_count":3,"channel_url":"sendbird_group_channel_19713583_14300af5f88191ded73b407ec761686e37793f99","created_at":1474369154,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":true,"last_message":{"created_at":1474984956842,"user":{"nickname":"snavas@path.travel","user_id":"snavas@path.travel","profile_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_02.jpg"},"file":{},"data":"None","message":"la
+        liamos","channel_url":"sendbird_group_channel_19032077_85677d3df832758ff3275055b2ee005d3b9553cc","type":"MESG","message_id":502569533},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_07.jpg","data":"","name":"team","member_count":4,"created_at":1474626360,"max_length_message":-1,"channel_url":"sendbird_group_channel_19032077_85677d3df832758ff3275055b2ee005d3b9553cc","channel":{"name":"team","member_count":4,"channel_url":"sendbird_group_channel_19032077_85677d3df832758ff3275055b2ee005d3b9553cc","created_at":1474626360,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_07.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1475825669587,"user":{"nickname":"Kristian
+        Torphy","user_id":"57f4fa99e3bd411c25000002","profile_url":""},"file":{},"data":"","message":"Testing","channel_url":"sendbird_group_channel_20522113_40bdc143132971a5f22461b0f200fb3efd1af584","type":"MESG","message_id":519308409},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_09.jpg","data":"","name":"Sam_57f4fa99e3bd411c25000002","member_count":2,"created_at":1475672988,"max_length_message":-1,"channel_url":"sendbird_group_channel_20522113_40bdc143132971a5f22461b0f200fb3efd1af584","channel":{"name":"Sam_57f4fa99e3bd411c25000002","member_count":2,"channel_url":"sendbird_group_channel_20522113_40bdc143132971a5f22461b0f200fb3efd1af584","created_at":1475672988,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_09.jpg","max_length_message":-1,"data":""}},{"unread_message_count":0,"is_distinct":false,"last_message":{"created_at":1476103361402,"user":{"nickname":"Octavia
+        Lakin","user_id":"57f511e5e3bd412891000002","profile_url":""},"file":{},"data":"","message":"Testing","channel_url":"sendbird_group_channel_19038708_38f3c740b872695e803fca09f34fb8813ad412c3","type":"MESG","message_id":524786177},"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_03.jpg","data":"","name":"Sam_57f511e5e3bd412891000002","member_count":2,"created_at":1475678696,"max_length_message":-1,"channel_url":"sendbird_group_channel_19038708_38f3c740b872695e803fca09f34fb8813ad412c3","channel":{"name":"Sam_57f511e5e3bd412891000002","member_count":2,"channel_url":"sendbird_group_channel_19038708_38f3c740b872695e803fca09f34fb8813ad412c3","created_at":1475678696,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_03.jpg","max_length_message":-1,"data":""}}],"next":"Z3MSSlVXQVMrEUBYXVdYFGBwE0ZTVy1VKw=="}'
+    http_version: 
+  recorded_at: Wed, 12 Oct 2016 08:42:03 GMT
+- request:
+    method: get
+    uri: https://api.sendbird.com/v3/group_channels?show_empty=true&user_id=nirrrr
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Api-Token:
+      - <%= api_token %>
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.1
+      Date:
+      - Wed, 12 Oct 2016 08:42:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '277'
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"channels":[{"unread_message_count":0,"is_distinct":false,"last_message":null,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_08.jpg","data":"","name":"Testing_group","member_count":1,"created_at":1476261360,"max_length_message":-1,"channel_url":"sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc","channel":{"name":"Testing_group","member_count":1,"channel_url":"sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc","created_at":1476261360,"cover_url":"https:\/\/sendbird.com\/main\/img\/cover\/cover_08.jpg","max_length_message":-1,"data":""}}],"next":""}'
+    http_version: 
+  recorded_at: Wed, 12 Oct 2016 08:42:05 GMT
+recorded_with: VCR 3.0.3
