@@ -1,0 +1,93 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sendbird.com/v3/open_channels/Testing_api_123/messages
+    body:
+      encoding: UTF-8
+      string: '{"message_type":"MESG","user_id":"nirrrr","message":"Tetsing messages","data":"Not
+        real"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Api-Token:
+      - <%= api_token %>
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.1
+      Date:
+      - Wed, 12 Oct 2016 09:49:26 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '217'
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1476265766426,"user":{"nickname":"nirrrr","user_id":"nirrrr","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_31_512px.png"},"file":{},"data":"Not
+        real","message":"Tetsing messages","channel_url":"Testing_api_123","type":"MESG","message_id":527575816}'
+    http_version: 
+  recorded_at: Wed, 12 Oct 2016 09:49:26 GMT
+- request:
+    method: post
+    uri: https://api.sendbird.com/v3/group_channels/sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc/messages
+    body:
+      encoding: UTF-8
+      string: '{"message_type":"MESG","user_id":"nirrrr","message":"Tetsing messages","data":"Not
+        real"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Api-Token:
+      - <%= api_token %>
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.1
+      Date:
+      - Wed, 12 Oct 2016 09:49:27 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '252'
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1476265767718,"user":{"nickname":"nirrrr","user_id":"nirrrr","profile_url":"https:\/\/sendbird.com\/main\/img\/profiles\/profile_31_512px.png"},"file":{},"data":"Not
+        real","message":"Tetsing messages","channel_url":"sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc","type":"MESG","message_id":527575839}'
+    http_version: 
+  recorded_at: Wed, 12 Oct 2016 09:49:27 GMT
+recorded_with: VCR 3.0.3
