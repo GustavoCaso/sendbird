@@ -1,5 +1,5 @@
 module Sendbird
-  class GroupChannel
+  class GroupChannelApi
     extend Client
     ENDPOINT = 'group_channels'.freeze
 

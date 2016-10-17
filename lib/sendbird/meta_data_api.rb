@@ -1,5 +1,5 @@
 module Sendbird
-  class MetaData < MetaBase
+  class MetaDataApi < MetaBase
     ENDPOINT = 'metadata'.freeze
   end
 end

@@ -1,5 +1,5 @@
 module Sendbird
-  class Message
+  class MessageApi
     extend Client
 
     class << self

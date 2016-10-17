@@ -1,5 +1,5 @@
 module Sendbird
-  class OpenChannel
+  class OpenChannelApi
     extend Client
     ENDPOINT = 'open_channels'.freeze
 

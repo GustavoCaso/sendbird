@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sendbird::GroupChannel do
+describe Sendbird::GroupChannelApi do
   CHANNEL_URL = 'sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc'
   USER_ID = 'nirrrr'
 

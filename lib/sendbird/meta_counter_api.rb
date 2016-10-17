@@ -1,5 +1,5 @@
 module Sendbird
-  class MetaCounter < MetaBase
+  class MetaCounterApi < MetaBase
     ENDPOINT = 'metacounter'.freeze
   end
 end
