@@ -8,3 +8,4 @@
 /spec/reports/
 /tmp/
 /config/secrets.yml
+.ruby-gemset
