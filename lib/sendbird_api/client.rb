@@ -3,6 +3,7 @@ require 'faraday'
 module SendbirdApi
   module Client
     class ApiKeyMissingError < StandardError; end
+    SENDBIRD_ENDPOINT = 'https://api.sendbird.com/v3/'
     PUBLIC_METHODS = [:get, :post, :put, :delete]
 
     PUBLIC_METHODS.each do |method|
@@ -24,10 +25,19 @@ module SendbirdApi
 
     private
     def conn
-      @conn ||= Faraday.new(url: SendbirdApi::Configuration::SENDBIRD_ENDPOINT) do |c|
+      @conn ||= Faraday.new(url: SENDBIRD_ENDPOINT) do |c|
                   c.request  :url_encoded
                   c.adapter  Faraday.default_adapter
+                  c.basic_auth(sendbird_user, sendbird_password)
                 end
+    end
+
+    def sendbird_user
+      SendbirdApi.user
+    end
+
+    def sendbird_password
+      SendbirdApi.password
     end
 
     def request(method:, path:, params:, body:)

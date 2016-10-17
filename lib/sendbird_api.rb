@@ -8,6 +8,7 @@ require "sendbird_api/message"
 require "sendbird_api/meta_base"
 require "sendbird_api/meta_data"
 require "sendbird_api/meta_counter"
+require "sendbird_api/application"
 require "sendbird_api/version"
 
 module SendbirdApi

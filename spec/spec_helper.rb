@@ -14,7 +14,9 @@ configuration = if File.exist?(config_file)
                 end
 
 SendbirdApi.config do |config|
-  config.api_key = configuration['api_key']
+  config.api_key     = configuration['api_key']
+  config.user        = configuration['user']
+  config.password    = configuration['password']
 end
 
 def create_dynamic_cassette(name)

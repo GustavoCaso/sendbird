@@ -1,8 +1,6 @@
 module SendbirdApi
   module Configuration
-    PUBLIC_METHODS = [:api_key]
-
-    SENDBIRD_ENDPOINT = 'https://api.sendbird.com/v3/'
+    PUBLIC_METHODS = [:api_key, :user, :password]
 
     attr_accessor *PUBLIC_METHODS
 
