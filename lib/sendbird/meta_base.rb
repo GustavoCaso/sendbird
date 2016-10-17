@@ -1,4 +1,4 @@
-module SendbirdApi
+module Sendbird
   class MetaBase
     extend Client
     class << self

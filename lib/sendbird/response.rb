@@ -1,4 +1,4 @@
-module SendbirdApi
+module Sendbird
   class Response
     attr_reader :status, :body
     def initialize(status, body)

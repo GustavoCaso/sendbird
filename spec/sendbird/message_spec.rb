@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SendbirdApi::Message do
+describe Sendbird::Message do
   OPEN_CHANNEL_URL = 'Testing_api_123'
   GROUP_CHANNEL_URL = 'sendbird_group_channel_19031773_daff0f4d3fc3974311123ca8134b126c242ac8cc'
 

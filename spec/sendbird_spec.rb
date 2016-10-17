@@ -1,5 +1,5 @@
 require "spec_helper"
 
-describe SendbirdApi do
+describe Sendbird do
   
 end

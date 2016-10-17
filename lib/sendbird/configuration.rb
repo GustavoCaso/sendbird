@@ -1,4 +1,4 @@
-module SendbirdApi
+module Sendbird
   module Configuration
     PUBLIC_METHODS = [:api_key]
 

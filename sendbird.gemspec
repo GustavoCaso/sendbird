@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sendbird_api/version'
+require 'sendbird/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sendbird_api"
-  spec.version       = SendbirdApi::VERSION
+  spec.name          = "sendbird"
+  spec.version       = Sendbird::VERSION
   spec.authors       = ["GustavoCaso"]
   spec.email         = ["gustavocaso@gmail.com"]
 

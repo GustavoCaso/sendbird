@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SendbirdApi::User do
+describe Sendbird::UserApi do
   context 'Invalid Request' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/invalid_request") do
@@ -27,7 +27,7 @@ describe SendbirdApi::User do
     end
 
     it 'will create user and return response' do
-      expect(request).to be_a(SendbirdApi::Response)
+      expect(request).to be_a(Sendbird::Response)
     end
 
     it do

@@ -1,4 +1,4 @@
-module SendbirdApi
+module Sendbird
   class Message
     extend Client
 
