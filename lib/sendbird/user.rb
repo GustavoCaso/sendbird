@@ -210,6 +210,14 @@ module Sendbird
       self
     end
 
+    def group_channels
+      @group_channels ||= GroupChannelApi.list(user_id: user_id, show_empty: true).body['channels']
+    end
+
+    def group_channel(channel_url)
+      GroupChannel.new(user_id, channel_url)
+    end
+
     def request!
       pending_requests.each do |request|
         response = UserApi.send(request[:method], *request[:args])
