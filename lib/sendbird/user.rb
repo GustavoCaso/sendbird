@@ -16,7 +16,7 @@ module Sendbird
 
     #Getters
     def get_user
-      response = UserApi.show(user_id)
+      response = UserApi.view(user_id)
       if response.status == 200
         response.body
       else
