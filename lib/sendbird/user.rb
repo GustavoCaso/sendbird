@@ -1,54 +1,56 @@
 module Sendbird
-  class User < Struct.new(:user_id, :nickname, :profile_url, :access_token, :last_seen_at, :is_online)
-    class InvalidParams < StandardError; end
-    class UserError < StandardError; end
+  class User
+    class InvalidRequest < StandardError; end
 
-    def self.find_or_create(params)
-      case params
-      when Sendbird::Response
-        new(params)
-      when Hash
-        user_id = params[:user_id] || params['user_id']
-        response = UserApi.show(user_id)
-        response.status == 200 ? new(response) : new(UserApi.create(params))
-      else
-        raise InvalidParams, 'Please provide an Senbird::Response object or a hash with user_id key'
-      end
+    attr_reader :user_id, :pending_requests
+    def initialize(user_id)
+      @user_id = user_id
+      @pending_requests = []
     end
 
-    private_class_method :new
-
-    def initialize(response)
-      if response.status == 200
-        super(*response.body.values)
-      else
-        raise UserError, "Error encounter #{response.error_message}"
-      end
+    def in_sync?
+      pending_requests.empty?
     end
 
-    def update(body)
-      self.class.find_or_create(UserApi.update(user_id, body))
+    def nickname=(nickname)
+      pending_requests << {method: :update, args: [user_id, {nickname: nickname}]}
+      self
     end
 
-    def update_nickname(nickname)
-      self.class.find_or_create(UserApi.update(user_id, {nickname: nickname}))
+    def profile_url=(profile_url)
+      pending_requests << {method: :update, args: [user_id, {profile_url: profile_url}]}
+      self
     end
 
-    def update_profile_url(profile_url)
-      self.class.find_or_create(UserApi.update(user_id, {profile_url: profile_url}))
-    end
-
-    def update_issue_access_token(issue_access_token)
-      self.class.find_or_create(UserApi.update(user_id, {issue_access_token: issue_access_token}))
+    def issue_access_token=(issue_access_token)
+      pending_requests << {method: :update, args: [user_id, {issue_access_token: issue_access_token}]}
+      self
     end
 
     def activate
-      UserApi.activate(user_id, { activate: true })
+      pending_requests << {method: :activate, args: [user_id, { activate: true }]}
+      self
     end
 
     def deactivate
-      UserApi.activate(user_id, { activate: false })
+      pending_requests << {method: :activate, args: [user_id, { activate: false }]}
+      self
     end
+
+    def update!
+      pending_requests.each do |request|
+        response = UserApi.send(request[:method], *request[:args])
+        if response.status != 200
+          self.pending_requests = []
+          raise InvalidRequest, "Invalid request for User with user_id: #{user_id}, error message: #{response.error_message}, the pending requets will be clear"
+        end
+      end
+      self.pending_requests = []
+      self
+    end
+
+    private
+    attr_writer :pending_requests
 
     def push_preferences
       UserApi.push_preferences(user_id).body
