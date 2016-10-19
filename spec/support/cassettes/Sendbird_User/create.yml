@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Api-Token:
-      - a153d68c1efb5e2897c6eac1361ed2ba61e1e441
+      - <%= api_token %>
       Content-Type:
       - application/json, charset=utf8
       Accept-Encoding:
@@ -53,7 +53,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Api-Token:
-      - a153d68c1efb5e2897c6eac1361ed2ba61e1e441
+      - <%= api_token %>
       Content-Type:
       - application/json, charset=utf8
       Accept-Encoding:
