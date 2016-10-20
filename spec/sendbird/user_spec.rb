@@ -21,9 +21,8 @@ describe Sendbird::User do
   context 'Pending Request' do
     it 'will add a new pending request, with the correct structure' do
       subject.nickname = 'Mckuly'
-      expect(subject.pending_requests).to_not be_empty
-      expect(subject.pending_requests.first).to be_a Hash
-      expect(subject.pending_requests.first.keys).to eq [:method, :args]
+      expect(subject.pending_requests.keys).to include(:update)
+      expect(subject.pending_requests[:update][:args]).to eq({nickname: 'Mckuly'})
     end
   end
 
@@ -36,13 +35,30 @@ describe Sendbird::User do
     it 'will clear pending_requests after finishing' do
       subject.nickname = 'Mckuly'
       request
-      expect(subject.pending_requests).to eq([])
+      expect(subject.pending_requests).to eq({})
     end
 
     it '#in_sync?' do
       subject.nickname = 'Mckuly'
       request
       expect(subject.in_sync?).to be_truthy
+    end
+
+    context 'group pending_requests to avoid multiple requests' do
+      let(:request) do
+        create_dynamic_cassette("#{described_class}/unidy_request") do
+          subject.request!
+        end
+      end
+
+      it 'will merge multiple request if possible' do
+        subject.nickname = 'Mckuly'
+        subject.profile_url= 'mckuly.com:466'
+        subject.issue_access_token= '3754287382g82732'
+        subject.timezone= 'Europe/London'
+        expect(subject.pending_requests.keys).to include(:update, :update_push_preferences)
+        expect(subject.pending_requests[:update][:args].keys).to include(:nickname, :profile_url, :issue_access_token)
+      end
     end
 
     context 'With callback' do
@@ -92,15 +108,15 @@ describe Sendbird::User do
         subject.nickname = 'Fake ID'
         expect{
           request
-        }.to raise_error(described_class::InvalidRequest)
+        }.to raise_error(Sendbird::InvalidRequest)
       end
 
       it 'will clear pending_requests' do
         subject.nickname = 'Fake ID'
         begin
           request
-        rescue described_class::InvalidRequest => e
-          expect(subject.pending_requests).to eq([])
+        rescue Sendbird::InvalidRequest => e
+          expect(subject.pending_requests).to eq({})
         end
       end
     end
