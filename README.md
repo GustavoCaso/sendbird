@@ -83,20 +83,48 @@ This is the second type of class inside the gem, acts as interface.
 
 Currently only supporting `User`, in the future I will add the rest of interfaces.
 
-So using the User interface will give you an instance that will let you chain multiple methods, to interact with the Api, they are:
+There are three ways to interact with the user interface:
+
+#### Block
+```ruby
+Sendbird::User.new('testing_user_interface_1') do |u|
+  u.nickname('Yolo')
+  u.profile_url('udbue')
+  u.timezone('Europe/London')
+  u.request!
+end
+```
+
+#### Chain Methods
+```ruby
+user = Sendbird::User.new('testing_user_interface_1')
+user.nickname('Yolo').profile_url('udbue').timezone('Europe/London').request!
+```
+
+#### Simple methods
+```ruby
+user = Sendbird::User.new('testing_user_interface_1')
+user.nickname='Yolo'
+user.profile_url=('udbue')
+user.timezone=('Europe/London')
+user.request!
+```
+
+This interface provide you with multiple methods to work with the Sendbird Api:
+
 ```ruby
 user_information=(user_information={})
 nickname=(nickname)
 profile_url=(profile_url)
 issue_access_token=(issue_access_token)
-activate
-deactivate  
 push_preferences=(push_preferences={})
 timezone=(timezone)  
 start_hour=(start_hour)
 end_hour=(end_hour)
 start_min=(start_min)
 end_min=(end_min)
+activate
+deactivate  
 mark_as_read_all
 register_gcm_token(token)
 register_apns_token(token)
@@ -105,7 +133,7 @@ unregister_apns_token(token)
 unregister_all_device_token
 ```  
 
-All this methods will store the requests, in an array of pending_requests so when sending the message `request!` will execute them.
+The interface will store all the pending requests called before the `request!`, when triggering the `request!` method will optimize how many request, have to be done, you don't have to worry about that.
 
 The User interface also provide some attributes: `gcm_tokens` and `apns_tokens`, they will store the different token this user have, so by triggering any of the `register_*` methods will store or remove from this attributes.
 

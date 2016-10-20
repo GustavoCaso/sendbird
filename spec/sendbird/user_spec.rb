@@ -5,6 +5,33 @@ describe Sendbird::User do
     described_class.new('testing_user_interface_1')
   end
 
+  context 'Chainable methods' do
+    let(:response_stub) do
+      OpenStruct.new(status: 200)
+    end
+    it 'will allow chaining methods before sending the request' do
+      expect(Sendbird::UserApi).to receive(:update).and_return(response_stub)
+      expect(Sendbird::UserApi).to receive(:update_push_preferences).and_return(response_stub)
+      subject.nickname('Yolo').profile_url('udbue').timezone('Europe/London').request!
+    end
+  end
+
+  context 'Block syntax' do
+    let(:response_stub) do
+      OpenStruct.new(status: 200)
+    end
+    it 'will allow passing a block when initializing' do
+      expect(Sendbird::UserApi).to receive(:update).and_return(response_stub)
+      expect(Sendbird::UserApi).to receive(:update_push_preferences).and_return(response_stub)
+      described_class.new('testing_user_interface_1') do |u|
+        u.nickname('Yolo')
+        u.profile_url('udbue')
+        u.timezone('Europe/London')
+        u.request!
+      end
+    end
+  end
+
   context 'Getters' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/get_user") do

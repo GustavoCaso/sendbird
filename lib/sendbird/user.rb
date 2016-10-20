@@ -11,6 +11,7 @@ module Sendbird
       @gcm_tokens = []
       @apns_tokens = []
       @pending_requests = {}
+      yield(self) if block_given?
     end
 
     def in_sync?
