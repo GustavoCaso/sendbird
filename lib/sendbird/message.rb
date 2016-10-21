@@ -15,11 +15,13 @@ module Sendbird
 
     private
     def message_type(type)
-      {
-        text: 'MESG',
-        file: 'FILE',
-        admin: 'ADMM'
-      }[type]
+      case type
+      when :text then 'MESG'
+      when :file then 'FILE'
+      when :admin then 'ADMM'
+      else
+        raise InvalidMessageType, "Please provide a valid message type, valid types are: [:text, :file, :admin]"
+      end
     end
 
     def message_body(type)
@@ -38,6 +40,8 @@ module Sendbird
         {
           "message_type": message_type(type),
         }
+      else
+        raise InvalidMessageType, "Please provide a valid message type, valid types are: [:text, :file, :admin]"
       end
     end
   end

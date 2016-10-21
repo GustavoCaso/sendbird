@@ -1,43 +1,36 @@
 module Sendbird
   class GroupChannel
-    class InvalidRequest < StandardError; end
+    class MissingUserId < StandardError; end
+    include RequestHandler
 
-    attr_reader :user_id, :channel_url
-    def initialize(user_id, channel_url)
-      @user_id = user_id
+    api_class GroupChannelApi
+    default_arg :channel_url
+
+    attr_reader :channel_url, :user_id
+    def initialize(channel_url, user_id = :missing_user_id)
       @channel_url = channel_url
-      @pending_requests = []
+      @user_id = user_id
+      @pending_requests = {}
+      yield(self) if block_given?
     end
 
     def name=(name)
-      pending_requests << {
-        method: :update,
-        args: [user_id, {name: name}]
-      }
+      merge_arguments(:update, {name: name})
       self
     end
 
     def cover_url=(cover_url)
-      pending_requests << {
-        method: :update,
-        args: [user_id, {cover_url: cover_url}]
-      }
+      merge_arguments(:update, {cover_url: cover_url})
       self
     end
 
     def data=(data)
-      pending_requests << {
-        method: :update,
-        args: [user_id, {data: data}]
-      }
+      merge_arguments(:update, {data: data})
       self
     end
 
     def is_distinct=(is_distinct)
-      pending_requests << {
-        method: :update,
-        args: [user_id, {is_distinct: is_distinct}]
-      }
+      merge_arguments(:update, {is_distinct: is_distinct})
       self
     end
 
@@ -45,26 +38,11 @@ module Sendbird
       message.send_message(type, data)
     end
 
-    def request!
-      pending_requests.each do |request|
-        response = GroupChannelApi.send(request[:method], *request[:args])
-        if response.status != 200
-          self.pending_requests = []
-          raise InvalidRequest.new(
-            error_message(
-              response.error_message,
-              request[:method],
-              request[:args]
-            )
-          )
-        end
-      end
-      self.pending_requests = []
-      self
-    end
-
     private
     def message
+      if user_id == :missing_user_id
+        raise MissingUserId, 'Please provide an user_id at initialize to been able to use send_message'
+      end
       @message ||= Message.new(user_id, channel_url, 'group_channels')
     end
   end
