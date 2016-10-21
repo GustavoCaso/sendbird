@@ -1,6 +1,8 @@
 require "sendbird/client"
 require "sendbird/configuration"
+require "sendbird/invalid_request"
 require "sendbird/response"
+require "sendbird/request_handler"
 require "sendbird/user_api"
 require "sendbird/user"
 require "sendbird/open_channel_api"
