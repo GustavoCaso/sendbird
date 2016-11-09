@@ -35,7 +35,7 @@ module Sendbird
     end
 
     def send_message(type, data)
-      message.send_message(type, data)
+      message.send(type, data)
     end
 
     def message

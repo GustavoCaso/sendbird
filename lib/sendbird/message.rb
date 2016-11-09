@@ -1,5 +1,6 @@
 module Sendbird
   class Message
+    class InvalidMessageType < StandardError; end
     attr_reader :user_id, :channel_url, :channel_type
 
     def initialize(user_id, channel_url, channel_type)
@@ -8,7 +9,7 @@ module Sendbird
       @channel_type = channel_type
     end
 
-    def send_message(type, data)
+    def send(type, data)
       MessageApi.send(channel_type, channel_url, message_body(type).merge(data))
       self
     end
@@ -26,17 +27,12 @@ module Sendbird
 
     def message_body(type)
       case type
-      when :text
+      when :text, :file
         {
           "message_type": message_type(type),
           "user_id": user_id
         }
-      when
-        {
-          "message_type": message_type(type),
-          "user_id": user_id
-        }
-      when
+      when :admin
         {
           "message_type": message_type(type),
         }
