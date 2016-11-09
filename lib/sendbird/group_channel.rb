@@ -6,7 +6,7 @@ module Sendbird
     api_class GroupChannelApi
     default_arg :channel_url
 
-    attr_reader :channel_url, :user_id
+    attr_reader :channel_url, :user_id, :pending_requests
     def initialize(channel_url, user_id = :missing_user_id)
       @channel_url = channel_url
       @user_id = user_id
@@ -38,12 +38,15 @@ module Sendbird
       message.send_message(type, data)
     end
 
-    private
     def message
+      return @message if defined?(@message)
       if user_id == :missing_user_id
         raise MissingUserId, 'Please provide an user_id at initialize to been able to use send_message'
       end
       @message ||= Message.new(user_id, channel_url, 'group_channels')
     end
+
+    private
+    attr_writer :pending_requests
   end
 end

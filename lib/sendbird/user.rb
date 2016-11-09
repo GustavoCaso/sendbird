@@ -166,7 +166,7 @@ module Sendbird
     end
 
     def group_channel(channel_url)
-      GroupChannel.new(user_id, channel_url)
+      GroupChannel.new(channel_url, user_id)
     end
 
     private
