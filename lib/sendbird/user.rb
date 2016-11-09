@@ -1,113 +1,175 @@
 module Sendbird
-  class User < Struct.new(:user_id, :nickname, :profile_url, :access_token, :last_seen_at, :is_online)
-    class InvalidParams < StandardError; end
-    class UserError < StandardError; end
+  class User
+    include RequestHandler
 
-    def self.find_or_create(params)
-      case params
-      when Sendbird::Response
-        new(params)
-      when Hash
-        user_id = params[:user_id] || params['user_id']
-        response = UserApi.show(user_id)
-        response.status == 200 ? new(response) : new(UserApi.create(params))
-      else
-        raise InvalidParams, 'Please provide an Senbird::Response object or a hash with user_id key'
-      end
+    api_class UserApi
+    default_arg :user_id
+
+    attr_reader :user_id, :pending_requests, :gcm_tokens, :apns_tokens
+    def initialize(user_id)
+      @user_id = user_id
+      @gcm_tokens = []
+      @apns_tokens = []
+      @pending_requests = {}
+      yield(self) if block_given?
     end
 
-    private_class_method :new
+    def in_sync?
+      pending_requests.empty?
+    end
 
-    def initialize(response)
+    #Getters
+    def get_user
+      response = UserApi.view(user_id)
       if response.status == 200
-        super(*response.body.values)
+        response.body
       else
-        raise UserError, "Error encounter #{response.error_message}"
+        raise InvalidRequest.new(
+          error_message(
+            response.error_message,
+            __method__,
+            user_id
+          )
+        )
       end
     end
 
-    def update(body)
-      self.class.find_or_create(UserApi.update(user_id, body))
+    def get_unread_count
+      response = UserApi.unread_count(user_id)
+      if response.status == 200
+        response.body['unread_count']
+      else
+        raise InvalidRequest.new(
+          error_message(
+            response.error_message,
+            __method__,
+            user_id
+          )
+        )
+      end
     end
 
-    def update_nickname(nickname)
-      self.class.find_or_create(UserApi.update(user_id, {nickname: nickname}))
+    def get_push_preferences
+      response = UserApi.push_preferences(user_id)
+      if response.status == 200
+        response.body
+      else
+        raise InvalidRequest.new(
+          error_message(
+            response.error_message,
+            __method__,
+            user_id
+          )
+        )
+      end
     end
 
-    def update_profile_url(profile_url)
-      self.class.find_or_create(UserApi.update(user_id, {profile_url: profile_url}))
+    # Setters
+    def user_information=(user_information={})
+      merge_arguments(:update, user_information)
+      self
     end
+    alias_method :user_information, :user_information=
 
-    def update_issue_access_token(issue_access_token)
-      self.class.find_or_create(UserApi.update(user_id, {issue_access_token: issue_access_token}))
+    def nickname=(nickname)
+      merge_arguments(:update, {nickname: nickname})
+      self
     end
+    alias_method :nickname, :nickname=
+
+    def profile_url=(profile_url)
+      merge_arguments(:update, {profile_url: profile_url})
+      self
+    end
+    alias_method :profile_url, :profile_url=
+
+    def issue_access_token=(issue_access_token)
+      merge_arguments(:update, {issue_access_token: issue_access_token})
+      self
+    end
+    alias_method :issue_access_token, :issue_access_token=
 
     def activate
-      UserApi.activate(user_id, { activate: true })
+      merge_arguments(:activate, { activate: true })
+      self
     end
 
     def deactivate
-      UserApi.activate(user_id, { activate: false })
+      merge_arguments(:activate, { activate: false })
+      self
     end
 
-    def push_preferences
-      UserApi.push_preferences(user_id).body
+    def push_preferences=(push_preferences={})
+      merge_arguments(:update_push_preferences, push_preferences)
+      self
     end
+    alias_method :push_preferences, :push_preferences=
 
-    def update_push_preferences(body)
-      UserApi.update_push_preferences(user_id, body)
+    def timezone=(timezone)
+      merge_arguments(:update_push_preferences, { timezone: timezone })
+      self
     end
+    alias_method :timezone, :timezone=
 
-    def delete_push_preferences
-      UserApi.delete_push_preferences(user_id)
+    def start_hour=(start_hour)
+      merge_arguments(:update_push_preferences, { start_hour: start_hour })
+      self
     end
+    alias_method :start_hour, :start_hour=
 
-    def update_timezone(timezone)
-      UserApi.update_push_preferences(user_id, { timezone: timezone }).body
+    def end_hour=(end_hour)
+      merge_arguments(:update_push_preferences, { end_hour: end_hour })
+      self
     end
+    alias_method :end_hour, :end_hour=
 
-    def update_start_hour(start_hour)
-      UserApi.update_push_preferences(user_id, { start_hour: start_hour }).body
+    def start_min=(start_min)
+      merge_arguments(:update_push_preferences, { start_min: start_min })
+      self
     end
+    alias_method :start_min, :start_min=
 
-    def update_end_hour(end_hour)
-      UserApi.update_push_preferences(user_id, { end_hour: end_hour }).body
+    def end_min=(end_min)
+      merge_arguments(:update_push_preferences, { end_min: end_min })
+      self
     end
-
-    def update_start_min(start_min)
-      UserApi.update_push_preferences(user_id, { start_min: start_min }).body
-    end
-
-    def update_end_min(end_min)
-      UserApi.update_push_preferences(user_id, { end_min: end_min }).body
-    end
-
-    def unread_count
-      UserApi.unread_count(user_id).body['unread_count']
-    end
-
-    def mark_as_read_all
-      UserApi.mark_as_read_all(user_id)
-    end
+    alias_method :end_min, :end_min=
 
     def register_gcm_token(token)
-      UserApi.register_gcm_token(user_id, token).body
+      merge_arguments(:register_gcm_token, token, ->(response){ self.gcm_tokens << response.body['token'] })
+      self
     end
 
     def register_apns_token(token)
-      UserApi.register_apns_token(user_id, token).body
+      merge_arguments(:register_apns_token, token, ->(response){ self.apns_tokens << response.body['token'] })
+      self
     end
 
     def unregister_gcm_token(token)
-      UserApi.unregister_gcm_token(user_id, token).body
+      merge_arguments(:unregister_gcm_token, token, ->(response){ self.gcm_tokens.delete(response.body['token'])})
+      self
     end
 
     def unregister_apns_token(token)
-      UserApi.unregister_apns_token(user_id, token).body
+      merge_arguments(:unregister_apns_token, token, ->(response){ self.apns_tokens.delete(response.body['token'])})
+      self
     end
 
     def unregister_all_device_token
-      UserApi.unregister_all_device_token(user_id).body
+      merge_arguments(:unregister_all_device_token, nil, ->(response) { self.apns_tokens = []; self.gcm_tokens = []; })
+      self
+    end
+
+    def mark_as_read_all
+      merge_arguments(:mark_as_read_all, {})
+      self
+    end
+
+    private
+    attr_writer :pending_requests, :apns_tokens, :gcm_tokens
+
+    def error_message(error_message, method_name, args)
+      "Invalid request for User with user_id: #{user_id}, error message: #{error_message} the request method was #{method_name} with args: #{args}"
     end
   end
 end

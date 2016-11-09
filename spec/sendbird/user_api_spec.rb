@@ -93,10 +93,10 @@ describe Sendbird::UserApi do
     end
   end
 
-  context 'Show' do
+  context 'View' do
     let(:request) do
       create_dynamic_cassette("#{described_class}/show") do
-        described_class.show('cvilanova@path.travel')
+        described_class.view('cvilanova@path.travel')
       end
     end
 
