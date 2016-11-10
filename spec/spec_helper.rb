@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "sendbird_api"
+require "sendbird"
 require 'yaml'
 require 'pry'
 # Setup shared_examples
@@ -20,7 +20,7 @@ SendbirdApi.config do |config|
 end
 
 def create_dynamic_cassette(name)
-  VCR.use_cassette(name, erb: {api_token: SendbirdApi.api_key}) do
+  VCR.use_cassette(name, erb: {api_token: Sendbird.api_key}) do
     yield
   end
 end
