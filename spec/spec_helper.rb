@@ -13,7 +13,7 @@ configuration = if File.exist?(config_file)
                   {'api_key' => ENV['API_KEY']}
                 end
 
-SendbirdApi.config do |config|
+Sendbird.config do |config|
   config.api_key     = configuration['api_key']
   config.user        = configuration['user']
   config.password    = configuration['password']

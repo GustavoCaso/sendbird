@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: post
+    method: get
     uri: https://api.sendbird.com/v3/applications
     body:
-      encoding: UTF-8
-      string: '{"name":"testing_app_creation"}'
+      encoding: US-ASCII
+      string: ''
     headers:
       Authorization:
       - Basic Z3VzdGF2b2Nhc29AZ21haWwuY29tOm4vYWtndTdHdXBMVVhyQ29h
@@ -25,22 +25,22 @@ http_interactions:
       Server:
       - nginx/1.10.1
       Date:
-      - Thu, 10 Nov 2016 06:34:42 GMT
+      - Thu, 10 Nov 2016 06:46:37 GMT
       Content-Type:
       - application/json
-      Transfer-Encoding:
-      - chunked
+      Content-Length:
+      - '286'
       Connection:
       - keep-alive
-      Vary:
-      - Accept-Language, Cookie
-      X-Frame-Options:
-      - SAMEORIGIN
       Content-Language:
       - en
+      Vary:
+      - Accept-Language, Cookie, Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
     body:
-      encoding: UTF-8
-      string: '{"icon_url":"","api_token":"","app_id":"","name":"testing_app_creation"}'
+      encoding: ASCII-8BIT
+      string: '{"applications":[{"icon_url":"","api_token":"","app_id":"","name":"testing_app_creation"},{"icon_url":"","api_token":"","app_id":"","name":"testing_app_creation"},{"icon_url":"","api_token":"","app_id":"","name":"Test_api"}],"next":""}'
     http_version:
-  recorded_at: Thu, 10 Nov 2016 06:34:42 GMT
+  recorded_at: Thu, 10 Nov 2016 06:46:38 GMT
 recorded_with: VCR 3.0.3
