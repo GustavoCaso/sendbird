@@ -165,9 +165,12 @@ module Sendbird
       self
     end
 
+    def group_channel(channel_url)
+      GroupChannel.new(channel_url, user_id)
+    end
+
     private
     attr_writer :pending_requests, :apns_tokens, :gcm_tokens
-
     def error_message(error_message, method_name, args)
       "Invalid request for User with user_id: #{user_id}, error message: #{error_message} the request method was #{method_name} with args: #{args}"
     end
