@@ -10,7 +10,7 @@ module Sendbird
     PUBLIC_METHODS.each do |method|
       define_method(method) do |path: , params: nil , body: nil|
         fail ApiKeyMissingError.new(api_key_message) if Sendbird.api_key.nil?
-        response = request(method: method, path: path, params: params, body: body)
+        response = api_token_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
       end
     end
@@ -18,7 +18,7 @@ module Sendbird
     PUBLIC_METHODS.each do |method|
       define_method("#{method}_http_basic") do |path: , params: nil , body: nil|
         fail HttpBasicMissing.new(http_basic_message) if sendbird_user.nil? || sendbird_password.nil?
-        response = request(method: method, path: path, params: params, body: body, api_key: false, http_basic: true)
+        response = http_basic_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
       end
     end
@@ -33,13 +33,18 @@ module Sendbird
     end
 
     private
-    def conn(http_basic)
+    def conn
       @conn ||= Faraday.new(url: Sendbird::Configuration::SENDBIRD_ENDPOINT) do |c|
                   c.request  :url_encoded
                   c.adapter  Faraday.default_adapter
-                  if http_basic
-                    c.basic_auth(sendbird_user, sendbird_password)
-                  end
+                end
+    end
+
+    def http_basic_conn
+      @http_basic_conn ||= Faraday.new(url: Sendbird::Configuration::SENDBIRD_ENDPOINT) do |c|
+                  c.request  :url_encoded
+                  c.adapter  Faraday.default_adapter
+                  c.basic_auth(sendbird_user, sendbird_password)
                 end
     end
 
@@ -51,10 +56,18 @@ module Sendbird
       Sendbird.password
     end
 
-    def request(method:, path:, params:, body:, api_key: true, http_basic: false)
-      conn(http_basic).send(method) do |req|
+    def api_token_request(method:, path:, params:, body:)
+      conn.send(method) do |req|
         req.url path, params
-        req.headers['Api-Token'] = Sendbird.api_key if api_key
+        req.headers['Api-Token'] = Sendbird.api_key
+        req.headers['Content-Type'] = 'application/json, charset=utf8'
+        req.body = body.to_json if body
+      end
+    end
+
+    def http_basic_request(method:, path:, params:, body:)
+      http_basic_conn.send(method) do |req|
+        req.url path, params
         req.headers['Content-Type'] = 'application/json, charset=utf8'
         req.body = body.to_json if body
       end
