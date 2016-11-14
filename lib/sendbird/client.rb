@@ -4,23 +4,37 @@ module Sendbird
   module Client
     class ApiKeyMissingError < StandardError; end
     class HttpBasicMissing < StandardError; end
+    class NotValidApplication < StandardError; end
 
     PUBLIC_METHODS = [:get, :post, :put, :delete]
 
     PUBLIC_METHODS.each do |method|
-      define_method(method) do |path: , params: nil , body: nil|
-        fail ApiKeyMissingError.new(api_key_message) if Sendbird.api_key.nil?
+      define_method(method) do |path: , params: nil , body: nil, app: nil|
+        fail ApiKeyMissingError.new(api_key_message) unless api_key(app)
         response = api_token_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
       end
     end
 
     PUBLIC_METHODS.each do |method|
-      define_method("#{method}_http_basic") do |path: , params: nil , body: nil|
+      define_method("#{method}_http_basic") do |path: , params: nil , body: nil, app: nil|
         fail HttpBasicMissing.new(http_basic_message) if sendbird_user.nil? || sendbird_password.nil?
         response = http_basic_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
       end
+    end
+
+    def api_key(app)
+      if app
+        if api_key = Sendbird.applications[app]
+          @api_key = api_key
+        else
+          fail NotValidApplication.new(invalid_application_message(app))
+        end
+      else
+        @api_key = Sendbird.applications[Sendbird.default_app]
+      end
+      @api_key
     end
 
     def build_url(*args)
@@ -59,7 +73,7 @@ module Sendbird
     def api_token_request(method:, path:, params:, body:)
       conn.send(method) do |req|
         req.url path, params
-        req.headers['Api-Token'] = Sendbird.api_key
+        req.headers['Api-Token'] = @api_key
         req.headers['Content-Type'] = 'application/json, charset=utf8'
         req.body = body.to_json if body
       end
@@ -74,11 +88,15 @@ module Sendbird
     end
 
     def api_key_message
-      'Please set up your api key'
+      'Plase set up your applications and default_app'
     end
 
     def http_basic_message
       'Please set up you http basic information to be able to execute this requets'
+    end
+
+    def invalid_application_message(app)
+      "Application name (#{app}) not found in the configuration, please check your configuration"
     end
   end
 end

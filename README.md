@@ -10,18 +10,29 @@ gem 'sendbird'
 
 ## Requirements
 
-You must provide your Sendbird Api Key, you can see your API key [here](https://dashboard.sendbird.com).
+You must provide:
+  - Your list of applications, been the Applications name and its Api Key.
+  - Your username and password.
+You can find your applications list [here](https://dashboard.sendbird.com).
+By setting a default, will set the api_key in the request where need, if not you will have to provide a app parameter to every method call.
+
 
 Rails way:
 ```ruby
 Sendbird.config do |c|
-  c.api_key = 'YOUR API KEY'
+  c.applications = {app_name: 'API_KEY'}
+  c.user = 'username'
+  c.password = 'password'
+  c.default_app = 'app_name'
 end
 ```
 
 Ruby way:
 ```ruby
-Sendbird.api_key = 'YOUR API KEY'
+Sendbird.applications = {app_name: 'API_KEY'}
+Sendbird.user = 'username'
+Sendbird.password = 'password'
+Sendbird.default_app = 'app_name'
 ```
 
 ## Usage

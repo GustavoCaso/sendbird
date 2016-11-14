@@ -143,9 +143,35 @@ describe Sendbird::ApplicationApi do
       end
     end
 
-    it 'will show dau' do
+    xit 'will show dau' do
       expect(request.status).to eq 200
       expect(request.body['message_count']).to eq(0)
+    end
+  end
+
+  context 'List Push Configuration GCM' do
+    let(:request) do
+      create_dynamic_cassette("#{described_class}/push_gcm") do
+        described_class.gcm_push_configuration
+      end
+    end
+
+    it 'will return the push configurations' do
+      expect(request.status).to eq 200
+      expect(request.body['push_configurations']).to eq([])
+    end
+  end
+
+  context 'List Push Configuration APNS' do
+    let(:request) do
+      create_dynamic_cassette("#{described_class}/push_apns") do
+        described_class.apns_push_configuration
+      end
+    end
+
+    it 'will return the push configurations' do
+      expect(request.status).to eq 200
+      expect(request.body['push_configurations']).to eq([])
     end
   end
 

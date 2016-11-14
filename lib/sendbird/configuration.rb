@@ -1,6 +1,6 @@
 module Sendbird
   module Configuration
-    PUBLIC_METHODS = [:api_key, :user, :password]
+    PUBLIC_METHODS = [:applications, :user, :password, :default_app]
 
     SENDBIRD_ENDPOINT = 'https://api.sendbird.com/v3/'
 
