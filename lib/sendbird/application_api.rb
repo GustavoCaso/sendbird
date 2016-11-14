@@ -44,6 +44,14 @@ module Sendbird
       def daily_message_count(params={})
         get(path: build_url('daily_count'), params: params)
       end
+
+      def gcm_push_configuration
+        get(path: build_url('push', 'gcm'))
+      end
+
+      def apns_push_configuration
+        get(path: build_url('push', 'apns'))
+      end
     end
   end
 end
