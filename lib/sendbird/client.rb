@@ -9,7 +9,8 @@ module Sendbird
     PUBLIC_METHODS = [:get, :post, :put, :delete]
 
     PUBLIC_METHODS.each do |method|
-      define_method(method) do |path: , params: nil , body: nil, app: nil|
+      define_method(method) do |path: , params: nil , body: nil|
+        params, body, app = get_app_from_params_or_body(params, body)
         fail ApiKeyMissingError.new(api_key_message) unless api_key(app)
         response = api_token_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
@@ -17,11 +18,34 @@ module Sendbird
     end
 
     PUBLIC_METHODS.each do |method|
-      define_method("#{method}_http_basic") do |path: , params: nil , body: nil, app: nil|
+      define_method("#{method}_http_basic") do |path: , params: nil , body: nil|
         fail HttpBasicMissing.new(http_basic_message) if sendbird_user.nil? || sendbird_password.nil?
         response = http_basic_request(method: method, path: path, params: params, body: body)
         Response.new(response.status, response.body)
       end
+    end
+
+    def build_url(*args)
+      if args.any?
+        new_args = args.dup
+        new_args.insert(0, self.const_get('ENDPOINT')).join('/')
+      else
+        self.const_get('ENDPOINT')
+      end
+    end
+
+
+    private
+
+    def get_app_from_params_or_body(params, body)
+      app = if params && params.has_key?(:app)
+        params.delete(:app)
+      elsif body && body.has_key?(:app)
+        body.delete(:app)
+      else
+        nil
+      end
+      [params, body, app]
     end
 
     def api_key(app)
@@ -37,16 +61,6 @@ module Sendbird
       @api_key
     end
 
-    def build_url(*args)
-      if args.any?
-        new_args = args.dup
-        new_args.insert(0, self.const_get('ENDPOINT')).join('/')
-      else
-        self.const_get('ENDPOINT')
-      end
-    end
-
-    private
     def conn
       @conn ||= Faraday.new(url: Sendbird::Configuration::SENDBIRD_ENDPOINT) do |c|
                   c.request  :url_encoded
