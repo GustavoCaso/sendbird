@@ -1,42 +1,44 @@
 module Sendbird
   class Message
-    extend Client
+    class InvalidMessageType < StandardError; end
+    attr_reader :user_id, :channel_url, :channel_type
 
-    class << self
-      def send(channel_type, channel_url, body)
-        post(path: build_url(channel_type, channel_url, 'messages'), body: body)
-      end
+    def initialize(user_id, channel_url, channel_type)
+      @user_id = user_id
+      @channel_url = channel_url
+      @channel_type = channel_type
+    end
 
-      # Get messages function can be called only
-      #  from Park or Enterprise plan.
-      def list(channel_type, channel_url, params)
-        get(path: build_url(channel_type, channel_url, 'messages'), params: params)
-      end
+    def send(type, data)
+      MessageApi.send(channel_type, channel_url, message_body(type).merge(data))
+      self
+    end
 
-      def view(channel_type, channel_url, message_id)
-        get(path: build_url(channel_type, channel_url, 'messages', message_id))
-      end
-
-      def destroy(channel_type, channel_url, message_id)
-        delete(path: build_url(channel_type, channel_url, 'messages', message_id))
-      end
-
-      def mark_as_read(channel_type, channel_url, body)
-        put(path: build_url(channel_type, channel_url, 'messages', 'mark_as_read'), body: body)
-      end
-
-      def count(channel_type, channel_url)
-        get(path: build_url(channel_type, channel_url, 'messages', 'total_count'))
-      end
-
-      def unread_count(channel_type, channel_url, params)
-        get(path: build_url(channel_type, channel_url, 'messages', 'unread_count'), params: params)
+    private
+    def message_type(type)
+      case type
+      when :text then 'MESG'
+      when :file then 'FILE'
+      when :admin then 'ADMM'
+      else
+        raise InvalidMessageType, "Please provide a valid message type, valid types are: [:text, :file, :admin]"
       end
     end
 
-    def self.build_url(*args)
-      args_dup = args.dup
-      args_dup.join('/')
+    def message_body(type)
+      case type
+      when :text, :file
+        {
+          "message_type": message_type(type),
+          "user_id": user_id
+        }
+      when :admin
+        {
+          "message_type": message_type(type),
+        }
+      else
+        raise InvalidMessageType, "Please provide a valid message type, valid types are: [:text, :file, :admin]"
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sendbird::OpenChannel do
+describe Sendbird::OpenChannelApi do
   GROUP_NAME = 'Testing_api_123'
   context 'Create' do
     let(:request) do

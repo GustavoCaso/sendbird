@@ -10,15 +10,30 @@ configuration = if File.exist?(config_file)
                   YAML.load(File.read(config_file))
                 else
                   # This condition is just for Travis
-                  {'api_key' => ENV['API_KEY']}
+                  {
+                    'applications' => {
+                      'Test' => ENV['test_api_key'],
+                      'Test_2' => ENV['test_api_key_2']
+                    },
+                    'user' => ENV['user'],
+                    'password' => ENV['password'],
+                    'default_app' => ENV['default_app']
+                  }
                 end
 
 Sendbird.config do |config|
-  config.api_key = configuration['api_key']
+  config.applications = configuration['applications']
+  config.user         = configuration['user']
+  config.password     = configuration['password']
+  config.default_app  = configuration['default_app']
+end
+
+def default_app_api_key
+  @default_app_api_key ||= Sendbird.applications[Sendbird.default_app]
 end
 
 def create_dynamic_cassette(name)
-  VCR.use_cassette(name, erb: {api_token: Sendbird.api_key}) do
+  VCR.use_cassette(name, erb: {api_token: default_app_api_key}) do
     yield
   end
 end

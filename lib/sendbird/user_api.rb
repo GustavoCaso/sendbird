@@ -4,7 +4,7 @@ module Sendbird
     ENDPOINT = 'users'.freeze
 
     class << self
-      def show(user_id)
+      def view(user_id)
         get(path: build_url(user_id))
       end
 
