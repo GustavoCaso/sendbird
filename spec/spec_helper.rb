@@ -10,7 +10,15 @@ configuration = if File.exist?(config_file)
                   YAML.load(File.read(config_file))
                 else
                   # This condition is just for Travis
-                  {'api_key' => ENV['API_KEY']}
+                  {
+                    'applications' => {
+                      'Test' => ENV['test_api_key'],
+                      'Test_2' => ENV['test_api_key_2']
+                    },
+                    'user' => ENV['user'],
+                    'password' => ENV['password'],
+                    'default_app' => ENV['default_app']
+                  }
                 end
 
 Sendbird.config do |config|

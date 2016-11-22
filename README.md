@@ -78,6 +78,17 @@ request_parameters = {
 Sendbird::UserApi.list(request_parameters)
 ```
 
+Example for sending a message to a different app:
+```ruby
+request_parameters = {
+  "token" => "string",
+  "limit" => "int",     
+  "user_ids" => "string",
+  "app" => 'string' # This app has to be in the configuration
+}
+Sendbird::UserApi.list(request_parameters)
+```
+
 All methods return a `Sendbird::Response` with have the next methods:
 #### body
   Returns the parsed body of the request
@@ -87,6 +98,90 @@ All methods return a `Sendbird::Response` with have the next methods:
   Returns the error_code from the request, if their is one
 #### error_message
   Returns the error_message from the request, if their is one  
+
+## List of all classes and it's class methods.
+
+### Sendbird::UserApi
+```ruby
+view(user_id)
+create(body)
+list(params={})
+update(user_id, body)
+unread_count(user_id)
+activate(user_id, body)
+block(user_id, body)
+unblock(user_id, unblock_user_id)
+block_list(user_id, params={})
+mark_as_read_all(user_id)
+register_gcm_token(user_id, token)
+register_apns_token(user_id, token)
+unregister_gcm_token(user_id, token)
+unregister_apns_token(user_id, token)
+unregister_all_device_token(user_id)
+push_preferences(user_id)
+update_push_preferences(user_id, body)
+delete_push_preferences(user_id)
+```  
+
+### Sendbird::OpenChannelApi
+```ruby
+view(channel_url, params={})
+create(body={})
+list(params={})
+destroy(channel_url)
+update(channel_url, body)
+participants(channel_url, params)
+freeze(channel_url, body)
+ban_user(channel_url, body)
+ban_list(channel_url, params={})
+ban_update(channel_url, user_id, body)
+ban_delete(channel_url, user_id)
+ban_view(channel_url, user_id)
+mute(channel_url, body)
+mute_list(channel_url, params={})
+mute_delete(channel_url, user_id)
+mute_view(channel_url, user_id)
+```
+
+### Sendbird::GroupChannelApi
+```ruby
+create(body)
+list(params={})
+update(channel_url, body)
+destroy(channel_url)
+view(channel_url, params={})
+members(channel_url, params={})
+is_member?(channel_url, user_id)
+invite(channel_url, body)
+hide(channel_url, body)
+leave(channel_url, body)
+```
+
+### Sendbird::MetaCounterApi && Sendbird::MetaDataApi
+```ruby
+create(channel_type, channel_url, body)
+view(channel_type, channel_url, params={})
+view_by_key(channel_type, channel_url, key)
+update(channel_type, channel_url, body)
+update_by_key(channel_type, channel_url, key, body)
+destroy(channel_type, channel_url)
+destroy_by_key(channel_type, channel_url, key)
+```
+
+### Sendbird::ApplicationApi
+```ruby
+create(body)
+list(params={})
+destroy_all
+destroy
+profanaty(body={})
+ccu
+mau(params={})
+dau(params={})
+daily_message_count(params={})
+gcm_push_configuration
+apns_push_configuration
+```
 
 ## Interface
 
