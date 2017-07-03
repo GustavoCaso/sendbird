@@ -41,7 +41,7 @@ Sendbird.default_app = 'app_name'
 
 There are two types of classes inside the Wrapper the one ending with Api, like `Sendbird::UserApi` or `Sendbird::MessageApi`, this classes act like simple wrapper for the Sendbird api.
 
-The Sendbird Api is quite big, to understand how to work with this gem, just remenber that every event from the api map to a class method from that Api class.
+The Sendbird Api is quite big, to understand how to work with this gem, just remember that every event from the api map to a class method from that Api class.
 
 Example:
 ```ruby
