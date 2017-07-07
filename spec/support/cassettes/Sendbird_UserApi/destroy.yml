@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://api.sendbird.com/v3/users/testing
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.2
+      Api-Token:
+      - 37aeeccbd820e3c858570d6e5e418256470d5b56
+      Content-Type:
+      - application/json, charset=utf8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.12.0
+      Date:
+      - Tue, 08 Aug 2017 21:48:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Language, Cookie
+      X-Frame-Options:
+      - SAMEORIGIN
+      Content-Language:
+      - en
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Tue, 08 Aug 2017 21:48:18 GMT
+recorded_with: VCR 3.0.3
