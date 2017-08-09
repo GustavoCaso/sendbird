@@ -20,6 +20,10 @@ module Sendbird
         put(path: build_url(user_id), body: body)
       end
 
+      def destroy(user_id)
+        delete(path: build_url(user_id))
+      end
+
       def unread_count(user_id)
         get(path: build_url(user_id, 'unread_count'))
       end

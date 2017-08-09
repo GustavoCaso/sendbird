@@ -373,4 +373,20 @@ describe Sendbird::UserApi do
       end
     end
   end
+
+  context 'Destroy user' do
+    let(:request) do
+      create_dynamic_cassette("#{described_class}/destroy") do
+        described_class.destroy('testing')
+      end
+    end
+
+    it do
+      expect(request.status).to eq 200
+    end
+
+    it do
+      expect(request.body).to eq({})
+    end
+  end
 end

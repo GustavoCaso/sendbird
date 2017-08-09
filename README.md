@@ -105,6 +105,7 @@ All methods return a `Sendbird::Response` with have the next methods:
 ```ruby
 view(user_id)
 create(body)
+destroy(user_id)
 list(params={})
 update(user_id, body)
 unread_count(user_id)
