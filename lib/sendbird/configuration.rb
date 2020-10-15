@@ -1,13 +1,26 @@
+require 'dry-configurable'
+
 module Sendbird
-  module Configuration
-    PUBLIC_METHODS = [:applications, :user, :password, :default_app]
+  class Configuration
+    class MissingConfigurationError < StandardError
+      def initialize(keys)
+        super("missing #{keys}. Please configure all setttings using Sendbird.configure")
+      end
+    end
 
-    SENDBIRD_ENDPOINT = 'https://api.sendbird.com/v3/'
+    include Dry::Configurable
 
-    attr_accessor *PUBLIC_METHODS
+    setting :api_token
+    setting :app_id
+    setting :username
+    setting :password
 
-    def config
-      yield self
+    def validate!
+      missing_keys = []
+      config.values.each do |key, value|
+        missing_keys << key unless value
+      end
+      raise MissingConfigurationError.new(missing_keys) if missing_keys.any?
     end
   end
 end

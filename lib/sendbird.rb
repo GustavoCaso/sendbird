@@ -13,5 +13,19 @@ require "sendbird/meta_counter_api"
 require "sendbird/version"
 
 module Sendbird
-  extend Configuration
+  class NotConfiguredError < StandardError; end
+
+  class << self
+    def configure
+      @config = Configuration.new
+      yield @config.config
+      @config.validate!
+      @config.finalize!
+    end
+
+    def config
+      raise NotConfiguredError unless @config.frozen?
+      @config.config
+    end
+  end
 end

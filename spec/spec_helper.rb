@@ -11,21 +11,18 @@ configuration = if File.exist?(config_file)
                 else
                   # This condition is just for Travis
                   {
-                    'applications' => {
-                      'Test' => ENV['test_api_key'],
-                      'Test_2' => ENV['test_api_key_2']
-                    },
-                    'user' => ENV['user'],
-                    'password' => ENV['password'],
-                    'default_app' => ENV['default_app']
+                    'app_id' => ENV['APP_ID'],
+                    'usermane' => ENV['USERNAME'],
+                    'password' => ENV['PASSWORD'],
+                    'api_token' => ENV['API_TOKEN']
                   }
                 end
 
-Sendbird.config do |config|
-  config.applications = configuration['applications']
-  config.user         = configuration['user']
-  config.password     = configuration['password']
-  config.default_app  = configuration['default_app']
+Sendbird.configure do |config|
+  config.app_id    = configuration['app_id']
+  config.api_token = configuration['api_token']
+  config.username  = configuration['username']
+  config.password  = configuration['password']
 end
 
 def default_app_api_key
